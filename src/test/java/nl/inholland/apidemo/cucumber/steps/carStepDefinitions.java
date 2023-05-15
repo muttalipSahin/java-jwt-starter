@@ -1,5 +1,6 @@
 package nl.inholland.apidemo.cucumber.steps;
 
+import com.jayway.jsonpath.JsonPath;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,9 +44,12 @@ public class carStepDefinitions {
 
     @When("I retrieve all cars")
     public void iRetrieveAllCars() {
+        response = restTemplate.exchange(restTemplate.getRootUri() + "/cars", HttpMethod.GET, new HttpEntity<>(null, new HttpHeaders()), String.class);
     }
 
     @Then("I should receive a list of cars")
     public void iShouldReceiveAListOfCars() {
+        int actual = JsonPath.read(response.getBody(), "$.size()");
+        Assertions.assertEquals(1, actual);
     }
 }

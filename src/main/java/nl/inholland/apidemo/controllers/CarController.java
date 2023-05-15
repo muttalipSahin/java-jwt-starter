@@ -5,6 +5,7 @@ import nl.inholland.apidemo.models.Car;
 import nl.inholland.apidemo.models.DTO.CarDTO;
 import nl.inholland.apidemo.services.CarService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +22,10 @@ public class CarController {
 
     ModelMapper modelMapper;
 
-//    public CarController() {
-//        modelMapper = new ModelMapper();
-//        modelMapper.getConfiguration().setFieldMatchingEnabled(true).setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
-//    }
+    public CarController() {
+        modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setFieldMatchingEnabled(true).setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+    }
 
     @GetMapping
     public List<CarDTO> getAll() {
