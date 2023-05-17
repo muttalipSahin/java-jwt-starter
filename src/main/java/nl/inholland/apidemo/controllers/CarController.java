@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.config.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -53,7 +56,9 @@ public class CarController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Car> add(@RequestBody Car car) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         return ResponseEntity.status(201).body(carService.add(car));
     }
